@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Sensortest</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="text_value">Choose sensor(s) to test:</string>
+    <string name="button_compass">Compass</string>
+    <string name="button_accelerometers">Accelerometers</string>
+</resources>
