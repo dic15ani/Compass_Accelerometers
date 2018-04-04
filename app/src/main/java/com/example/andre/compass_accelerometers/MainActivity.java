@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** Called when the user taps the Accelerometers button */
     public void accelerometers(View view) {
         Intent intent = new Intent(this, Accelerometers.class);
         startActivity(intent);
