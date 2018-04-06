@@ -12,6 +12,8 @@ public class Accelerometers extends AppCompatActivity implements SensorEventList
     private SensorManager mSensorManager;
     private Sensor mAccelerometer;
     private TextView textViewX, textViewY, textViewZ;
+    private int black = -16777216;
+    private int magneta = -65281;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,5 +48,22 @@ public class Accelerometers extends AppCompatActivity implements SensorEventList
         textViewX.setText("X: " + event.values[0]);
         textViewY.setText("Y: " + event.values[1]);
         textViewZ.setText("Z: " + event.values[2]);
+
+        // Changing color depending on sensor value
+        if(event.values[0] > 0){
+            textViewX.setTextColor(magneta);
+        }else{
+            textViewX.setTextColor(black);
+        }
+        if(event.values[1] > 0){
+            textViewY.setTextColor(magneta);
+        }else{
+            textViewY.setTextColor(black);
+        }
+        if(event.values[2] > 0){
+            textViewZ.setTextColor(magneta);
+        }else{
+            textViewZ.setTextColor(black);
+        }
     }
 }
