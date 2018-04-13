@@ -14,6 +14,8 @@ public class Accelerometers extends AppCompatActivity implements SensorEventList
     private TextView textViewX, textViewY, textViewZ;
     private int black = -16777216;
     private int magneta = -65281;
+    private float[] filter = new float[3];
+    static final float ALPHA = 0.25f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,26 +46,36 @@ public class Accelerometers extends AppCompatActivity implements SensorEventList
     @Override
     public void onSensorChanged(SensorEvent event) {
 
+        filter = lowPass(event.values.clone(), filter);
+
         // Assigning sensor data to text views
-        textViewX.setText("X: " + event.values[0]);
-        textViewY.setText("Y: " + event.values[1]);
-        textViewZ.setText("Z: " + event.values[2]);
+        textViewX.setText("X: " + (String.format("%.2f",filter[0])));
+        textViewY.setText("Y: " + (String.format("%.2f",filter[1])));
+        textViewZ.setText("Z: " + (String.format("%.2f",filter[2])));
 
         // Changing color depending on sensor value
-        if(event.values[0] > 0){
+        if(filter[0] > 0){
             textViewX.setTextColor(magneta);
         }else{
             textViewX.setTextColor(black);
         }
-        if(event.values[1] > 0){
+        if(filter[1] > 0){
             textViewY.setTextColor(magneta);
         }else{
             textViewY.setTextColor(black);
         }
-        if(event.values[2] > 0){
+        if(filter[2] > 0){
             textViewZ.setTextColor(magneta);
         }else{
             textViewZ.setTextColor(black);
         }
+    }
+    //low pass filter from Moodle
+    private float[] lowPass( float[] input, float[] output ) {
+        if ( output == null ) return input;
+        for ( int i=0; i<input.length; i++ ) {
+            output[i] = output[i] + ALPHA * (input[i] - output[i]);
+        }
+        return output;
     }
 }
